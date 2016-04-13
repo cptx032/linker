@@ -28,21 +28,24 @@
 
 		<div id="main-content">
 			<div class="row">
-				<form class="col s12">
+				<form class="col s12" action="/add" method="POST" id="main-form">
+					<input type="hidden" value="{{parent_id}}" name="parent_id">
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="name" id="name" type="text" class="validate">
-							<label for="first_name">Name</label>
+							<input placeholder="name" name="name" id="name" type="text" class="validate">
+							<label for="name">Name</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="Folder description or url link" id="name" type="text" class="validate">
-							<label for="first_name">Description</label>
+							<input placeholder="Folder description or url link" name="description" id="description" type="text" class="validate">
+							<label for="description">Description</label>
 						</div>
 					</div>
 					
-					<a class="btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></a>
+					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light red right">
+						<i class="material-icons">add</i>
+					</a>
 					
 				</form>
 			</div>

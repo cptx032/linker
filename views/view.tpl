@@ -21,8 +21,11 @@
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
-					<li><a href="/add/{{folder_id}}"><i class="material-icons">add</i></a></li>
-					<li><a href="/delete/{{folder_id}}"><i class="material-icons">delete</i></a></li>
+					<li><a title="add a new folder" href="/add/{{folder_id}}"><i class="material-icons">add</i></a></li>
+					<li><a title="delete current folder" href="/delete/{{folder_id}}"><i class="material-icons">delete</i></a></li>
+					% if folder_parent:
+						<li><a title="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
+					% end
 				</ul>
 			</div>
 		</nav>
@@ -31,15 +34,19 @@
 			<ul class="collection with-header">
 				<li class="collection-header"><h4>{{folder_name}}</h4></li>
 				% for item in elems:
-					<a href="{{item.desc}}" class="collection-item avatar">
-						% if item.type == 1:
+					% if item.type == 1:
+						<a href="/view/{{item.id}}" class="collection-item avatar">
 							<img src="/images/folder.png" alt="folder-icon" class="circle">
-						% elif item.type == 2:
-							<img src="/images/contacts.png" alt="link-icon" class="circle">
-						% end
-						<span class="title">{{item.name}}</span>
-						<p>{{item.desc}}</p>
-					</a>
+							<span class="title">{{item.name}}</span>
+							<p>{{item.desc}}</p>
+						</a>
+					% else:
+						<a target="_blank" href="{{item.desc}}" class="collection-item avatar">
+							<img src="/images/contacts.png" alt="folder-icon" class="circle">
+							<span class="title">{{item.name}}</span>
+							<p>{{item.desc}}</p>
+						</a>
+					% end
 				% end
 			</ul>
 		</div>
