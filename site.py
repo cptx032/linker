@@ -30,11 +30,22 @@ class Elem:
 		self.parent = parent
 	
 	def get_parent(self):
-		raise NotImplementedError
+		if self.parent:
+			return Elem.get_by_id(self.parent)
+		else:
+			return self
 	
 	def get_elems(self):
 		sql = '''SELECT * FROM ELEM WHERE PARENT=?'''
 		return [Elem(*i) for i in cursor.execute(sql, (self.id,))]
+
+	def remove(self):
+		childs = self.get_elems()
+		for i in childs:
+			i.remove()
+		# removing it self
+		sql = '''DELETE FROM ELEM WHERE ID=?'''
+		cursor.execute(sql, (self.id,))
 
 	@staticmethod
 	def insert(elem):
@@ -88,6 +99,16 @@ def post_add():
 	)
 	connection.commit()
 	return redirect('/view/%d' % (parent))
+
+@route('/delete/<id:int>')
+def delete_get(id):
+	elem = Elem.get_by_id(id)
+	parent = elem.get_parent()
+	if not elem:
+		return 'not found'
+	else:
+		elem.remove()
+		return redirect('/view/%d' % (parent.id))
 
 @error(404)
 def error404(error):

@@ -44,7 +44,7 @@
 					</div>
 					
 					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light red right">
-						<i class="material-icons">add</i>
+						<i class="material-icons">done</i>
 					</a>
 					
 				</form>
