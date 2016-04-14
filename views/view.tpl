@@ -32,6 +32,33 @@
 			</div>
 		</nav>
 
+		<div id="confirm-delete-modal" class="modal bottom-sheet">
+			<div class="modal-content">
+				<span id="hidden-id" style="display: none;">id</span>
+				<h4 id="confirm-delete-title">Delete X?</h4>
+				<p>This operation can't be undone</p>
+			</div>
+				<div class="modal-footer">
+				<a href="javascript:$('#confirm-delete-modal').closeModal();" class=" modal-action modal-close waves-effect waves-green btn-flat teal white-text">
+					Cancel
+				</a>
+				<a id="button-delete-item" href="javascript:go_to_delete()" class=" modal-action modal-close waves-effect waves-green btn-flat teal-text">
+					Delete
+				</a>
+			</div>
+		</div>
+  
+		<script>
+			function go_to_delete() {
+				window.location = '/delete/' + $('#hidden-id').text();
+			}
+			function delete_item(id, name) {
+				$('#confirm-delete-title').text('Delete ' + name + '?');
+				$('#hidden-id').text(id);
+				$('#confirm-delete-modal').openModal();
+			}
+		</script>
+
 		<div id="main-content">
 			<ul class="collection with-header">
 				<li class="collection-header"><h4>{{folder_name}}</h4></li>
@@ -44,7 +71,7 @@
 							<a href="/add/{{item.id}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
 								<i class="material-icons">mode_edit</i>
 							</a>
-							<a href="/delete/{{item.id}}" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
+							<a href="javascript:delete_item({{item.id}}, '{{item.name}}')" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
 								<i class="material-icons">delete</i>
 							</a>
 						</a>
