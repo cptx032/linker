@@ -7,6 +7,8 @@ from bottle import route, run, error, template, static_file, request, get, post,
 connection = sqlite3.connect('./db.db')
 cursor = connection.cursor()
 
+IS_IN_PYTHONANYWHERE = False
+
 ELEM_TABLE = '''
 CREATE TABLE ELEM (
 	ID INTEGER PRIMARY KEY,
@@ -126,17 +128,9 @@ def view_folder(id):
 		folder_parent=root.parent,
 		elems=root.get_elems()
 	)
-	
-run(host='localhost', port=8080, debug=True)
-connection.close()
 
-'''
-DEPLOY in pythonanywhere
-from bottle import default_app, route
-
-@route('/')
-def hello_world():
-    return 'Hello from Bottle!'
-
-application = default_app()
-'''
+if IS_IN_PYTHONANYWHERE:
+	application = default_app()
+else:
+	run(host='localhost', port=8080, debug=True)
+	connection.close()
