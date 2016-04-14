@@ -30,15 +30,16 @@
 			<div class="row">
 				<form class="col s12" action="/add" method="POST" id="main-form">
 					<input type="hidden" value="{{parent_id}}" name="parent_id">
+					<input type="hidden" value="{{edit_object.id if edit_object else 0}}" name="edit_id">
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="name" name="name" id="name" type="text" class="validate">
+							<input placeholder="name" name="name" id="name" type="text" class="validate" value="{{edit_object.name if edit_object else ''}}">
 							<label for="name">Name</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="Folder description or url link" name="description" id="description" type="text" class="validate">
+							<input placeholder="Folder description or url link" name="description" id="description" type="text" class="validate" value="{{edit_object.desc if edit_object else ''}}">
 							<label for="description">Description</label>
 						</div>
 					</div>

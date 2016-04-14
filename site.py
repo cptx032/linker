@@ -2,7 +2,7 @@
 # Author: Willie Lawrence - cptx032 arroba gmail dot com
 import sys
 import sqlite3
-from bottle import route, run, error, template, static_file, request, get, post, redirect
+from bottle import route, run, error, template, static_file, request, get, post, redirect, default_app
 
 connection = sqlite3.connect('./db.db')
 cursor = connection.cursor()
@@ -36,6 +36,10 @@ class Elem:
 			return Elem.get_by_id(self.parent)
 		else:
 			return self
+
+	def update(self):
+		sql = '''UPDATE ELEM SET NAME=?, TYPE=?, DESCRIPTION=? WHERE ID=?'''
+		cursor.execute(sql, (self.name, self.type, self.desc, self.id))
 	
 	def get_elems(self):
 		sql = '''SELECT * FROM ELEM WHERE PARENT=?'''
@@ -77,28 +81,37 @@ if len(sys.argv) > 1:
 		sys.exit(0)
 
 @route('/')
-def hello():
+def index():
 	return 'fixme'
 
 @route('/images/<filename>')
 def server_static(filename):
 	return static_file(filename, root='static')
 
-@get('/add/<parent_id:int>')
-def get_add(parent_id):
-	return template('add', parent_id=parent_id)
+@get('/add/<parent_id:int>/<edit_id:int>')
+def get_add(parent_id, edit_id):
+	edit_object = Elem.get_by_id(edit_id)
+	return template('add', parent_id=parent_id, edit_object=edit_object)
 
-@route('/add', method='POST')
+@post('/add')
 def post_add():
+	edit_id = int(request.forms.get('edit_id'))
 	parent = int(request.forms.get('parent_id'))
 	name = request.forms.get('name')
 	description = request.forms.get('description')
 	type = FOLDER
 	if description.lower().startswith('http'):
 		type = LINK
-	Elem.insert(
-		Elem(None, name, type, description, parent)
-	)
+	if edit_id > 0:
+		elem = Elem.get_by_id(edit_id)
+		elem.name = name
+		elem.desc = description
+		elem.type = type
+		elem.update()
+	else:
+		Elem.insert(
+			Elem(None, name, type, description, parent)
+		)
 	connection.commit()
 	return redirect('/view/%d' % (parent))
 
@@ -110,6 +123,7 @@ def delete_get(id):
 		return 'not found'
 	else:
 		elem.remove()
+		connection.commit()
 		return redirect('/view/%d' % (parent.id))
 
 @error(404)

@@ -24,7 +24,7 @@
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
-					<li><a title="add a new folder" href="/add/{{folder_id}}"><i class="material-icons">add</i></a></li>
+					<li><a title="add a new folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
 					% if folder_parent:
 						<li><a title="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
 					% end
@@ -41,7 +41,7 @@
 							<img src="/images/folder.png" alt="folder-icon" class="circle">
 							<span class="title">{{item.name}}</span>
 							<p>{{item.desc}}</p>
-							<a href="/edit/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
+							<a href="/add/{{item.id}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
 								<i class="material-icons">mode_edit</i>
 							</a>
 							<a href="/delete/{{item.id}}" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
@@ -53,7 +53,7 @@
 							<img src="/images/contacts.png" alt="folder-icon" class="circle">
 							<span class="title">{{item.name}}</span>
 							<p>{{item.desc}}</p>
-							<a href="/edit/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
+							<a href="/add/{{folder_parent}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
 								<i class="material-icons">mode_edit</i>
 							</a>
 							<a href="/delete/{{item.id}}" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
