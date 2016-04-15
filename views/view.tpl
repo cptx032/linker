@@ -24,10 +24,14 @@
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
-					<li><a title="add a new folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
+					<li style="margin-right: 15px;">{{username}}</li>
+					% if can_add:
+						<li><a title="add a new folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
+					% end
 					% if folder_parent:
 						<li><a title="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
 					% end
+					<li><a title="logout" href="/logout"><i class="material-icons">power_settings_new</i></a></li>
 				</ul>
 			</div>
 		</nav>
@@ -60,6 +64,7 @@
 		</script>
 
 		<div id="main-content">
+			% if can_see:
 			<ul class="collection with-header">
 				<li class="collection-header"><h4>{{folder_name}}</h4></li>
 				% for item in elems:
@@ -68,12 +73,16 @@
 							<img src="/images/folder.png" alt="folder-icon" class="circle">
 							<span class="title">{{item.name}}</span>
 							<p>{{item.desc}}</p>
-							<a href="/add/{{item.id}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
-								<i class="material-icons">mode_edit</i>
-							</a>
-							<a href="javascript:delete_item({{item.id}}, '{{item.name}}')" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
-								<i class="material-icons">delete</i>
-							</a>
+							% if can_edit:
+								<a href="/add/{{item.id}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
+									<i class="material-icons">mode_edit</i>
+								</a>
+							% end
+							% if can_delete:
+								<a href="javascript:delete_item({{item.id}}, '{{item.name}}')" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
+									<i class="material-icons">delete</i>
+								</a>
+							% end
 						</a>
 					% else:
 						<a target="_blank" href="{{item.desc}}" class="collection-item avatar">
@@ -90,6 +99,11 @@
 					% end
 				% end
 			</ul>
+			% else:
+				<div style="padding: 55px;">
+					You haven't permission to see the content
+				</div>
+			% end
 		</div>
 	</body>
 </html>
