@@ -4,9 +4,6 @@ import sys
 import sqlite3
 from bottle import route, run, error, template, static_file, request, get, post, redirect, default_app, response
 
-connection = sqlite3.connect('./db.db')
-cursor = connection.cursor()
-
 IS_IN_PYTHONANYWHERE = False
 
 ELEM_TABLE = '''
@@ -35,9 +32,15 @@ class User:
 	
 	@staticmethod
 	def get_user_by_name(name):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''SELECT * FROM USER WHERE NAME=?'''
 		cursor.execute(sql, (name,))
 		row = cursor.fetchone()
+		
+		connection.close()
+		
 		if not row:
 			return None
 		return User(*row)
@@ -47,19 +50,37 @@ class User:
 		sql = '''INSERT INTO USER (NAME, AUTHSTRING)
 		VALUES (?,?)
 		'''
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		cursor.executemany(sql, [(elem.name, elem.authstring)])
+		
+		connection.commit()
+		connection.close()
 	
 	def update(self):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''UPDATE USER SET NAME=?, AUTHSTRING=? WHERE ID=?'''
 		cursor.execute(sql, (self.name, self.authstring, self.id))
+		
+		connection.commit()
+		connection.close()
 
 	def remove(self):
 		childs = self.get_elems()
 		for i in childs:
 			i.remove()
 		# removing it self
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''DELETE FROM USER WHERE ID=?'''
 		cursor.execute(sql, (self.id,))
+		
+		connection.commit()
+		connection.close()
 
 FOLDER = 1
 LINK = 2
@@ -79,43 +100,72 @@ class Elem:
 			return self
 
 	def update(self):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''UPDATE ELEM SET NAME=?, TYPE=?, DESCRIPTION=? WHERE ID=?'''
 		cursor.execute(sql, (self.name, self.type, self.desc, self.id))
+		
+		connection.commit()
+		connection.close()
 	
 	def get_elems(self):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
 		sql = '''SELECT * FROM ELEM WHERE PARENT=?'''
 		return [Elem(*i) for i in cursor.execute(sql, (self.id,))]
+		connection.close()
 
 	def remove(self):
 		childs = self.get_elems()
 		for i in childs:
 			i.remove()
 		# removing it self
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''DELETE FROM ELEM WHERE ID=?'''
 		cursor.execute(sql, (self.id,))
+		
+		connection.commit()
+		connection.close()
 
 	@staticmethod
 	def insert(elem):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
 		sql = '''INSERT INTO ELEM (NAME, TYPE, DESCRIPTION, PARENT)
 		VALUES (?,?,?,?)
 		'''
 		cursor.executemany(sql, [(elem.name, elem.type, elem.desc, elem.parent)])
+		
+		connection.commit()
+		connection.close()
 
 	@staticmethod
 	def get_by_id(id):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
 		sql = '''SELECT * FROM ELEM WHERE ID=?'''
 		cursor.execute(sql, (id,))
 		row = cursor.fetchone()
+		
+		connection.close()
 		if not row:
 			return None
 		return Elem(*row)
 
 def initial_config():
+	connection = sqlite3.connect('./db.db')
+	cursor = connection.cursor()
+
 	cursor.execute(ELEM_TABLE)
 	cursor.execute(USER_TABLE)
 	User.insert(User(None, 'sky', 'sade')) # see, add, delete, edit
 	User.insert(User(None, 'guest', 's'))
 	Elem.insert(Elem(None, 'Root', FOLDER, 'root', None))
+
 	connection.commit()
 	connection.close()
 
@@ -187,7 +237,6 @@ def post_add():
 		Elem.insert(
 			Elem(None, name, type, description, parent)
 		)
-	connection.commit()
 	return redirect('/view/%d' % (parent))
 
 @route('/delete/<id:int>')
@@ -199,7 +248,6 @@ def delete_get(id):
 		return 'not found'
 	else:
 		elem.remove()
-		connection.commit()
 		return redirect('/view/%d' % (parent.id))
 
 @error(404)
@@ -245,4 +293,3 @@ if IS_IN_PYTHONANYWHERE:
 	application = default_app()
 else:
 	run(host='localhost', port=8080, debug=True)
-	connection.close()
