@@ -224,6 +224,9 @@ def post_add():
 	parent = int(request.forms.get('parent_id'))
 	name = request.forms.get('name')
 	description = request.forms.get('description')
+	if (name.strip() == '') or (description.strip() == ''):
+		return 'title or description cannot be empty'
+
 	type = FOLDER
 	if description.lower().startswith('http'):
 		type = LINK
