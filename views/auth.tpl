@@ -31,7 +31,7 @@
 				<form class="col s12" action="/auth" method="POST" id="main-form">
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="name" name="name" id="name" type="text" class="validate">
+							<input autofocus placeholder="name" name="name" id="name" type="text" class="validate">
 							<label for="name">User name</label>
 						</div>
 					</div>
