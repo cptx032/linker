@@ -33,7 +33,7 @@
 					<input type="hidden" value="{{edit_object.id if edit_object else 0}}" name="edit_id">
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="name" name="name" id="name" type="text" class="validate" value="{{edit_object.name if edit_object else ''}}">
+							<input autofocus placeholder="name" name="name" id="name" type="text" class="validate" value="{{edit_object.name if edit_object else ''}}">
 							<label for="name">Name</label>
 						</div>
 					</div>

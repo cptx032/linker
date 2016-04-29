@@ -22,16 +22,15 @@
 	<body class="">
 		<nav>
 			<div class="nav-wrapper">
-				<a href="#" class="brand-logo"><span class="pad-10">linker</span></a>
+				<a href="#" class="brand-logo left"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
-					<li style="margin-right: 15px;">{{username}}</li>
 					% if can_add:
-						<li><a title="add a new folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
+						<li><a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
 					% end
 					% if folder_parent:
-						<li><a title="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
+						<li><a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
 					% end
-					<li><a title="logout" href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+					<li><a class="tooltipped" data-tooltip="logout from {{username}}" href="/logout"><i class="material-icons">power_settings_new</i></a></li>
 				</ul>
 			</div>
 		</nav>
