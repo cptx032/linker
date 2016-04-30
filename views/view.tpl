@@ -21,16 +21,33 @@
 	</head>
 	<body class="">
 		<nav>
-			<div class="nav-wrapper">
+			<div class="nav-wrapper blue-grey darken-3">
 				<a href="#" class="brand-logo left"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
+					<li>
+						<a class="tooltipped" data-tooltip="search links/folders" href="/search">
+							<i class="material-icons">search</i>
+						</a>
+					</li>
 					% if can_add:
-						<li><a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0"><i class="material-icons">add</i></a></li>
+						<li>
+							<a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0">
+								<i class="material-icons">add</i>
+							</a>
+						</li>
 					% end
 					% if folder_parent:
-						<li><a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}"><i class="material-icons">replay</i></a></li>
+						<li>
+							<a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}">
+								<i class="material-icons">replay</i>
+							</a>
+						</li>
 					% end
-					<li><a class="tooltipped" data-tooltip="logout from {{username}}" href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+					<li>
+						<a class="tooltipped" data-tooltip="logout from {{username}}" href="/logout">
+							<i class="material-icons">power_settings_new</i>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -38,8 +55,12 @@
 		<div id="confirm-delete-modal" class="modal bottom-sheet">
 			<div class="modal-content">
 				<span id="hidden-id" style="display: none;">id</span>
-				<h4 id="confirm-delete-title">Delete X?</h4>
-				<p>This operation can't be undone</p>
+				<h4 id="confirm-delete-title">
+					Delete X?
+				</h4>
+				<p>
+					This operation can't be undone
+				</p>
 			</div>
 				<div class="modal-footer">
 				<a href="javascript:$('#confirm-delete-modal').closeModal();" class=" modal-action modal-close waves-effect waves-green btn-flat teal white-text">

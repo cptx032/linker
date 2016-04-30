@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Auth</title>
+		<title>Search</title>
 		<meta charset="utf-8">
 		<script type="text/javascript" charset="utf-8" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
@@ -22,20 +22,22 @@
 	<body class="">
 		<nav>
 			<div class="nav-wrapper blue-grey darken-3">
-				<a href="#" class="brand-logo"><span class="pad-10">auth</span></a>
+				<a href="#" class="brand-logo">
+					<span class="pad-10">Search</span>
+				</a>
 			</div>
 		</nav>
 
 		<div id="main-content">
 			<div class="row">
-				<form class="col s12" action="/auth" method="POST" id="main-form">
+				<form class="col s12" action="/search" method="POST" id="main-form">
 					<div class="row">
 						<div class="input-field col s12">
-							<input autofocus placeholder="name" name="name" id="name" type="text" class="validate">
-							<label for="name">User name</label>
+							<input autofocus placeholder="text contained in link or folder" name="search" id="search" type="text" class="validate">
+							<label for="name">Search</label>
 						</div>
 					</div>
-					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right">
+					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right tooltipped" data-tooltip="search">
 						<i class="material-icons">done</i>
 					</a>
 					

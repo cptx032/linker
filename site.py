@@ -292,6 +292,11 @@ def view_folder(id):
 		**get_permissions()
 	)
 
+@get('/search')
+@auth
+def search_get():
+	return template('search')
+
 if IS_IN_PYTHONANYWHERE:
 	application = default_app()
 else:

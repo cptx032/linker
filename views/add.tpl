@@ -21,8 +21,8 @@
 	</head>
 	<body class="">
 		<nav>
-			<div class="nav-wrapper">
-				<a href="#" class="brand-logo"><span class="pad-10">add link</span></a>
+			<div class="nav-wrapper blue-grey darken-3">
+				<a href="#" class="brand-logo"><span class="pad-10">{{'edit' if edit_object else 'add'}} link</span></a>
 			</div>
 		</nav>
 
@@ -43,11 +43,15 @@
 							<label for="description">Description</label>
 						</div>
 					</div>
-					
-					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light red right">
+
+					<a style="margin: 5px;" href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 left tooltipped" data-tooltip="Save">
 						<i class="material-icons">done</i>
 					</a>
-					
+
+					<a style="margin: 5px;" href="javascript:history.back()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right tooltipped" data-tooltip="Cancel editing">
+						<i class="material-icons">cancel</i>
+					</a>
+
 				</form>
 			</div>
 		</div>
