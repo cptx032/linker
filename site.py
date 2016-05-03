@@ -162,7 +162,7 @@ def initial_config():
 
 	cursor.execute(ELEM_TABLE)
 	cursor.execute(USER_TABLE)
-	User.insert(User(None, 'sky', 'sade')) # see, add, delete, edit
+	User.insert(User(None, 'admin', 'sade')) # see, add, delete, edit
 	User.insert(User(None, 'guest', 's'))
 	Elem.insert(Elem(None, 'Root', FOLDER, 'root', None))
 
