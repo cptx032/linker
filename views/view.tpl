@@ -109,12 +109,16 @@
 							<img src="/images/contacts.png" alt="folder-icon" class="circle">
 							<span class="title">{{item.name}}</span>
 							<p>{{item.desc}}</p>
-							<a href="/add/{{folder_parent}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
-								<i class="material-icons">mode_edit</i>
-							</a>
-							<a href="/delete/{{item.id}}" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
-								<i class="material-icons">delete</i>
-							</a>
+							% if can_edit:
+								<a href="/add/{{folder_parent}}/{{item.id}}" class="btn-floating btn-small waves-effect waves-light teal right margin-top35">
+									<i class="material-icons">mode_edit</i>
+								</a>
+							% end
+							% if can_delete:
+								<a href="javascript:delete_item({{item.id}}, '{{item.name}}')" class="btn-floating btn-small waves-effect waves-light red right margin-top35">
+									<i class="material-icons">delete</i>
+								</a>
+							% end
 						</a>
 					% end
 				% end
