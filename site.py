@@ -114,7 +114,7 @@ class Elem:
 		cursor = connection.cursor()
 		sql = '''SELECT * FROM ELEM WHERE PARENT=?'''
 		return [Elem(*i) for i in cursor.execute(sql, (self.id,))]
-		connection.close()
+		connection.close() # fixme
 
 	def remove(self):
 		childs = self.get_elems()
@@ -151,6 +151,19 @@ class Elem:
 		cursor.execute(sql, (id,))
 		row = cursor.fetchone()
 		
+		connection.close()
+		if not row:
+			return None
+		return Elem(*row)
+
+	@staticmethod
+	def search_by_name_description(name, description):
+		connection = sqlite3.connect('./db.db')
+		cursor = connection.cursor()
+		
+		sql = '''SELECT * FROM ELEM WHERE NAME=? AND DESCRIPTION=?'''
+		cursor.execute(sql, (name, description))
+		row = cursor.fetchone()
 		connection.close()
 		if not row:
 			return None
@@ -227,6 +240,10 @@ def post_add():
 	if (name.strip() == '') or (description.strip() == ''):
 		return 'title or description cannot be empty'
 
+	already_registered = Elem.search_by_name_description(name, description)
+	if already_registered:
+		return 'link/folder already registered'
+
 	type = FOLDER
 	if description.lower().startswith('http'):
 		type = LINK
@@ -292,9 +309,9 @@ def view_folder(id):
 		**get_permissions()
 	)
 
-@get('/search')
+@get('/search/<term>')
 @auth
-def search_get():
+def search_get(term):
 	return template('search')
 
 if IS_IN_PYTHONANYWHERE:

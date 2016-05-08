@@ -18,6 +18,14 @@
 				padding: 25px;
 			}
 		</style>
+		<script type="text/javascript">
+			function search()
+			{
+				var term = document.getElementById('search');
+				if (term.value != '')
+					window.location.href = `/search/${term.value}`;
+			}
+		</script>
 	</head>
 	<body class="">
 		<nav>
@@ -30,18 +38,15 @@
 
 		<div id="main-content">
 			<div class="row">
-				<form class="col s12" action="/search" method="POST" id="main-form">
-					<div class="row">
-						<div class="input-field col s12">
-							<input autofocus placeholder="text contained in link or folder" name="search" id="search" type="text" class="validate">
-							<label for="name">Search</label>
-						</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input autofocus placeholder="text contained in link or folder" name="search" id="search" type="text" class="validate">
+						<label for="name">Search</label>
 					</div>
-					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right tooltipped" data-tooltip="search">
-						<i class="material-icons">done</i>
-					</a>
-					
-				</form>
+				</div>
+				<a href="javascript:search()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right tooltipped" data-tooltip="search">
+					<i class="material-icons">done</i>
+				</a>
 			</div>
 		</div>
 		

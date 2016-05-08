@@ -25,7 +25,7 @@
 				<a href="#" class="brand-logo left"><span class="pad-10">linker</span></a>
 				<ul id="nav-mobile" class="right">
 					<li>
-						<a class="tooltipped" data-tooltip="search links/folders" href="/search">
+						<a class="tooltipped" data-tooltip="search links/folders" href="/search/''">
 							<i class="material-icons">search</i>
 						</a>
 					</li>
