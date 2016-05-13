@@ -299,13 +299,16 @@ def view_folder(id):
 	root = Elem.get_by_id(id)
 	if not root:
 		return 'not found'
+
+	links = root.get_elems()
+	links.reverse()
 	
 	return template(
 		'view',
 		folder_name=root.name,
 		folder_id=root.id,
 		folder_parent=root.parent,
-		elems=root.get_elems(),
+		elems=links,
 		**get_permissions()
 	)
 
