@@ -20,38 +20,39 @@
 		</style>
 	</head>
 	<body class="">
-		<nav>
-			<div class="nav-wrapper blue-grey darken-3">
-				<a href="#" class="brand-logo left"><span class="pad-10">linker</span></a>
-				<ul id="nav-mobile" class="right">
-					<li>
-						<a class="tooltipped" data-tooltip="search links/folders" href="/search/''">
-							<i class="material-icons">search</i>
-						</a>
-					</li>
-					% if can_add:
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper blue-grey darken-3">
+					<a href="#" class="brand-logo left"><span class="pad-10">{{folder_name}}</span></a>
+					<ul id="nav-mobile" class="right">
 						<li>
-							<a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0">
-								<i class="material-icons">add</i>
+							<a class="tooltipped" data-tooltip="search links/folders" href="/search/''">
+								<i class="material-icons">search</i>
 							</a>
 						</li>
-					% end
-					% if folder_parent:
+						% if can_add:
+							<li>
+								<a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0">
+									<i class="material-icons">add</i>
+								</a>
+							</li>
+						% end
+						% if folder_parent:
+							<li>
+								<a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}">
+									<i class="material-icons">replay</i>
+								</a>
+							</li>
+						% end
 						<li>
-							<a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}">
-								<i class="material-icons">replay</i>
+							<a class="tooltipped" data-tooltip="logout from {{username}}" href="/logout">
+								<i class="material-icons">power_settings_new</i>
 							</a>
 						</li>
-					% end
-					<li>
-						<a class="tooltipped" data-tooltip="logout from {{username}}" href="/logout">
-							<i class="material-icons">power_settings_new</i>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-
+					</ul>
+				</div>
+			</nav>
+		</div>
 		<div id="confirm-delete-modal" class="modal bottom-sheet">
 			<div class="modal-content">
 				<span id="hidden-id" style="display: none;">id</span>
@@ -85,8 +86,7 @@
 
 		<div id="main-content">
 			% if can_see:
-			<ul class="collection with-header">
-				<li class="collection-header"><h4>{{folder_name}}</h4></li>
+			<ul class="collection">
 				% for item in elems:
 					% if item.type == 1:
 						<a href="/view/{{item.id}}" class="collection-item avatar">
