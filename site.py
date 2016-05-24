@@ -97,7 +97,7 @@ class Elem:
 		if self.parent:
 			return Elem.get_by_id(self.parent)
 		else:
-			return self
+			return None
 
 	def update(self):
 		connection = sqlite3.connect('./db.db')
@@ -300,15 +300,24 @@ def view_folder(id):
 	if not root:
 		return 'not found'
 
+	# getting all childrens (links/folders)
 	links = root.get_elems()
+	# the order if date asc, so go desc
 	links.reverse()
+	
+	# getting the parent tree
+	tree = []
+	elem_i = root
+	while elem_i is not None:
+		tree.insert( 0, elem_i )
+		elem_i = elem_i.get_parent()
 	
 	return template(
 		'view',
-		folder_name=root.name,
 		folder_id=root.id,
 		folder_parent=root.parent,
 		elems=links,
+		parent_tree=tree,
 		**get_permissions()
 	)
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{{folder_name}} - View</title>
+		<title>View - {{parent_tree[-1].name}}</title>
 		<meta charset="utf-8">
 		<script type="text/javascript" charset="utf-8" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
@@ -23,7 +23,12 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper blue-grey darken-3">
-					<a href="#" class="brand-logo left"><span class="pad-10">{{folder_name}}</span></a>
+				
+				<span class="col s12" style="margin-left: 15px;">
+					% for elem in parent_tree:
+						<a href="/view/{{elem.id}}" class="breadcrumb">{{elem.name}}</a>
+					% end
+				</span>
 					<ul id="nav-mobile" class="right">
 						<li>
 							<a class="tooltipped" data-tooltip="search links/folders" href="/search/''">
@@ -34,13 +39,6 @@
 							<li>
 								<a class="tooltipped" data-tooltip="add a new link/folder" href="/add/{{folder_id}}/0">
 									<i class="material-icons">add</i>
-								</a>
-							</li>
-						% end
-						% if folder_parent:
-							<li>
-								<a class="tooltipped" data-tooltip="back to parent folder" href="/view/{{folder_parent}}">
-									<i class="material-icons">replay</i>
 								</a>
 							</li>
 						% end
