@@ -31,17 +31,16 @@
 				<form class="col s12" action="/auth" method="POST" id="main-form">
 					<div class="row">
 						<div class="input-field col s12">
-							<input autofocus placeholder="name" name="name" id="name" type="text" class="validate">
-							<label for="name">User name</label>
+							<input autofocus placeholder="key" name="name" id="name" type="password" class="validate">
+							<label for="name">Access key</label>
 						</div>
 					</div>
 					<a href="javascript:$( '#main-form' ).submit()" class="btn-floating btn-large waves-effect waves-light blue-grey darken-3 right">
 						<i class="material-icons">done</i>
 					</a>
-					
 				</form>
 			</div>
 		</div>
-		
+
 	</body>
 </html>
