@@ -158,3 +158,6 @@ class Elem:
 		if not row:
 			return None
 		return Elem(*row)
+
+	def __repr__(self):
+		return ('(%d) %s - %s' % (self.id, self.name, self.desc)).encode('utf8')
