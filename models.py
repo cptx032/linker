@@ -78,10 +78,8 @@ LINK = 2
 
 
 class Elem:
-    def __init__(self, id, name, type, desc, parent=None):
-        assert(type in [FOLDER, LINK])
+    def __init__(self, id, name, desc, parent=None):
         self.id = id
-        self.type = type
         self.name = name
         self.desc = desc
         self.parent = parent
@@ -96,8 +94,8 @@ class Elem:
         connection = sqlite3.connect('./db.db')
         cursor = connection.cursor()
 
-        sql = '''UPDATE ELEM SET NAME=?, TYPE=?, DESCRIPTION=? WHERE ID=?'''
-        cursor.execute(sql, (self.name, self.type, self.desc, self.id))
+        sql = '''UPDATE ELEM SET NAME=?, DESCRIPTION=? WHERE ID=?'''
+        cursor.execute(sql, (self.name, self.desc, self.id))
 
         connection.commit()
         connection.close()
@@ -127,11 +125,11 @@ class Elem:
     def insert(elem):
         connection = sqlite3.connect('./db.db')
         cursor = connection.cursor()
-        sql = u'''INSERT INTO ELEM (NAME, TYPE, DESCRIPTION, PARENT)
-        VALUES (?,?,?,?)
+        sql = u'''INSERT INTO ELEM (NAME, DESCRIPTION, PARENT)
+        VALUES (?,?,?)
         '''
         cursor.executemany(
-            sql, [(elem.name, elem.type, elem.desc, elem.parent)])
+            sql, [(elem.name, elem.desc, elem.parent)])
 
         connection.commit()
         connection.close()

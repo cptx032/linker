@@ -47,9 +47,34 @@ def index():
     return redirect('/view/1')
 
 
+@get('/api/v1/link/<id:int>/')
+def get_folder_childs(id):
+    root = Elem.get_by_id(id)
+    if not root:
+        return {'error': u'not found'}
+    links = root.get_elems()
+
+    tree = []
+    elem_i = root
+    while elem_i is not None:
+        tree.insert(0, elem_i)
+        elem_i = elem_i.get_parent()
+
+    return {
+        'folder': root.__dict__,
+        'childs': [i.__dict__ for i in links],
+        'tree': [i.__dict__ for i in tree]
+    }
+
+
 @route('/images/<filename>')
 @auth
 def server_static(filename):
+    return static_file(filename, root='static')
+
+
+@get('/static/<filename>')
+def static(filename):
     return static_file(filename, root='static')
 
 
